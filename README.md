@@ -92,57 +92,56 @@ See [FIXES_SUMMARY.md](./FIXES_SUMMARY.md) for details on project improvements a
 
 ## 🚀 GitHub Pages Deployment
 
-The project is automatically deployed to GitHub Pages when you push to the main branch.
+The project automatically deploys to GitHub Pages.
 
 **Live Site:** https://bsse1613-eng.github.io/Study-Flow/
 
-### Automatic Deployment Setup
+### How It Works
 
-1. **Add Secrets to GitHub:**
-   - Go to your repository settings
-   - Navigate to **Settings > Secrets and variables > Actions**
-   - Click **New repository secret**
-   - Add `VITE_GEMINI_API_KEY` with your Gemini API key
+1. **Build locally:** `npm run build` → creates `docs/` folder
+2. **Commit & push:** `git add . && git commit -m "..." && git push`
+3. **GitHub Pages serves:** Automatically serves from `docs/` folder
+4. **Site is live:** https://bsse1613-eng.github.io/Study-Flow/
 
-2. **GitHub Actions Workflow**
-   - The `.github/workflows/deploy.yml` file automatically:
-     - Installs dependencies
-     - Builds the project (`npm run build`)
-     - Deploys to GitHub Pages from the `dist/` folder
+### Setup GitHub Pages
 
-3. **Verify Deployment**
-   - Check the **Actions** tab in your repository
-   - Look for the "Deploy to GitHub Pages" workflow
-   - Once completed (green checkmark), your site is live!
+1. Go to: https://github.com/bsse1613-eng/Study-Flow/settings/pages
+2. Select:
+   - **Source:** "Deploy from a branch"
+   - **Branch:** `main`
+   - **Folder:** `/docs`
+3. Click **Save**
 
-### Manual Deployment (if needed)
+### Add API Secret (Required!)
+
+1. Go to: Settings → Secrets and variables → Actions
+2. Click **New repository secret**
+3. Add:
+   - **Name:** `VITE_GEMINI_API_KEY`
+   - **Value:** Your Gemini API key
+4. Save
+
+### Deploy Your Changes
 
 ```bash
-# Build the project
+# Make changes
+# ...
+
+# Build
 npm run build
 
-# Push to main branch
+# Commit and push
 git add .
-git commit -m "Update deployment"
+git commit -m "Update StudyFlow"
 git push origin main
 
-# GitHub Actions will automatically deploy
+# Site updates automatically!
 ```
 
-### Troubleshooting GitHub Pages
+### Troubleshooting
 
-- **Blank page on GitHub Pages?**
-  - Ensure `vite.config.ts` has `base: '/Study-Flow/'`
-  - Check that `dist/` folder was generated successfully
-  - Verify GitHub Pages is set to deploy from `gh-pages` branch
-  - Check Actions tab for workflow errors
+- **Blank page?** Clear cache (Ctrl+Shift+Delete)
+- **Assets not loading?** Check base path is `/Study-Flow/` in vite.config.ts
+- **Features not working?** Ensure API secret is added to GitHub
 
-- **Assets not loading?**
-  - Clear browser cache (Ctrl+Shift+Delete)
-  - Check browser console for 404 errors
-  - Verify all paths are relative (not absolute)
-
-- **API Key not working?**
-  - Add `VITE_GEMINI_API_KEY` secret to GitHub repository
-  - Workflow must rebuild after adding secret
-  - Trigger by pushing a new commit
+For detailed setup, see [GITHUB_PAGES_SETUP.md](./GITHUB_PAGES_SETUP.md)
