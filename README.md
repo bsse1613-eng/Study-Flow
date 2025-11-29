@@ -87,3 +87,62 @@ App.tsx           # Main app component
 ### Recent Fixes
 
 See [FIXES_SUMMARY.md](./FIXES_SUMMARY.md) for details on project improvements and bug fixes.
+
+---
+
+## 🚀 GitHub Pages Deployment
+
+The project is automatically deployed to GitHub Pages when you push to the main branch.
+
+**Live Site:** https://bsse1613-eng.github.io/Study-Flow/
+
+### Automatic Deployment Setup
+
+1. **Add Secrets to GitHub:**
+   - Go to your repository settings
+   - Navigate to **Settings > Secrets and variables > Actions**
+   - Click **New repository secret**
+   - Add `VITE_GEMINI_API_KEY` with your Gemini API key
+
+2. **GitHub Actions Workflow**
+   - The `.github/workflows/deploy.yml` file automatically:
+     - Installs dependencies
+     - Builds the project (`npm run build`)
+     - Deploys to GitHub Pages from the `dist/` folder
+
+3. **Verify Deployment**
+   - Check the **Actions** tab in your repository
+   - Look for the "Deploy to GitHub Pages" workflow
+   - Once completed (green checkmark), your site is live!
+
+### Manual Deployment (if needed)
+
+```bash
+# Build the project
+npm run build
+
+# Push to main branch
+git add .
+git commit -m "Update deployment"
+git push origin main
+
+# GitHub Actions will automatically deploy
+```
+
+### Troubleshooting GitHub Pages
+
+- **Blank page on GitHub Pages?**
+  - Ensure `vite.config.ts` has `base: '/Study-Flow/'`
+  - Check that `dist/` folder was generated successfully
+  - Verify GitHub Pages is set to deploy from `gh-pages` branch
+  - Check Actions tab for workflow errors
+
+- **Assets not loading?**
+  - Clear browser cache (Ctrl+Shift+Delete)
+  - Check browser console for 404 errors
+  - Verify all paths are relative (not absolute)
+
+- **API Key not working?**
+  - Add `VITE_GEMINI_API_KEY` secret to GitHub repository
+  - Workflow must rebuild after adding secret
+  - Trigger by pushing a new commit
